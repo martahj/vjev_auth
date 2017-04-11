@@ -17,7 +17,8 @@
     "undo-migrate": "knex migrate:rollback --env",
     "undo-migrate-test": "yarn run undo-migrate test",
     "undo-migrate-dev": "yarn run undo-migrate development",
-    "undo-migrate-prod": "yarn run undo-migrate production"
+    "undo-migrate-prod": "yarn run undo-migrate production",
+    "test": "ava"
   },
   "dependencies": {
     "ava": "^0.19.1",
