@@ -1,0 +1,8 @@
+createdb
+dropdb
+
+psql
+\l << list databases
+
+psql [database]
+\d <<<

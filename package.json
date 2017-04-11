@@ -1,0 +1,32 @@
+{
+  "name": "vjeverica_auth",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": {},
+  "license": "MIT",
+  "scripts": {
+    "start": "babel-node index",
+    "knex": "knex --knexfile database/knexfile.js",
+    "make-migration": "yarn run knex migrate:make",
+    "make-seed": "yarn run knex seed:make",
+    "seed": "yarn run knex seed:run",
+    "migrate": "yarn run knex migrate:latest --env",
+    "migrate-test": "yarn run migrate test",
+    "migrate-dev": "yarn run migrate development",
+    "migrate-prod": "yarn run migrate production",
+    "undo-migrate": "knex migrate:rollback --env",
+    "undo-migrate-test": "yarn run undo-migrate test",
+    "undo-migrate-dev": "yarn run undo-migrate development",
+    "undo-migrate-prod": "yarn run undo-migrate production"
+  },
+  "dependencies": {
+    "ava": "^0.19.1",
+    "babel-cli": "^6.24.1",
+    "babel-preset-node6": "^11.0.0",
+    "bookshelf": "^0.10.3",
+    "bookshelf-cascade-delete": "^2.0.1",
+    "knex": "^0.12.9",
+    "pg": "^6.1.5",
+    "seneca": "^3.3.0"
+  }
+}
