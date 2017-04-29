@@ -1,16 +1,16 @@
 module.exports = {
   migrations: {
-    directory: './database/migrations'
+    directory: './database/migrations',
   },
   seeds: {
-    directory: './seeds'
+    directory: './seeds',
   },
   development: {
     client: 'pg',
     connection: {
       host: 'localhost',
       port: 5432,
-      database: 'vjev_auth_dev'
+      database: 'vjev_auth_dev',
     },
     // seeds: {
     //   directory: './seeds'
@@ -21,9 +21,9 @@ module.exports = {
     connection: {
       host: 'localhost',
       port: 5432,
-      database: 'vjev_auth_test'
-      },
-      debug: false, // set true for verbose database operations
+      database: 'vjev_auth_test',
+    },
+    debug: false, // set true for verbose database operations
   },
   production: {
     client: 'pg',
@@ -31,5 +31,5 @@ module.exports = {
     // migrations: {
     //   directory: './database/migrations'
     // }
-  }
+  },
 };

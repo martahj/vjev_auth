@@ -6,3 +6,7 @@ psql
 
 psql [database]
 \d <<<
+
+\c <<< connects to a datbase
+
+\conninfo << see which database you're connected to

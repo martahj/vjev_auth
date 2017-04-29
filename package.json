@@ -6,18 +6,15 @@
   "license": "MIT",
   "scripts": {
     "start": "babel-node index",
+    "lint": "eslint database config utils models",
     "knex": "knex --knexfile database/knexfile.js",
     "make-migration": "yarn run knex migrate:make",
     "make-seed": "yarn run knex seed:make",
     "seed": "yarn run knex seed:run",
-    "migrate": "yarn run knex migrate:latest --env",
-    "migrate-test": "yarn run migrate test",
-    "migrate-dev": "yarn run migrate development",
-    "migrate-prod": "yarn run migrate production",
-    "undo-migrate": "knex migrate:rollback --env",
-    "undo-migrate-test": "yarn run undo-migrate test",
-    "undo-migrate-dev": "yarn run undo-migrate development",
-    "undo-migrate-prod": "yarn run undo-migrate production",
+    "migrate": "yarn run knex migrate:latest",
+    "migrate-test": "NODE_ENV=test yarn run migrate",
+    "undo-migrate": "yarn run knex migrate:rollback --env",
+    "undo-migrate-test": "NODE_ENV=test yarn run undo-migrate",
     "test": "ava"
   },
   "dependencies": {
@@ -26,8 +23,32 @@
     "babel-preset-node6": "^11.0.0",
     "bookshelf": "^0.10.3",
     "bookshelf-cascade-delete": "^2.0.1",
+    "jsonwebtoken": "^7.4.0",
     "knex": "^0.12.9",
     "pg": "^6.1.5",
     "seneca": "^3.3.0"
+  },
+  "ava": {
+    "files": [
+      "**/*.spec.js"
+    ],
+    "require": [
+      "babel-register",
+      "babel-polyfill"
+    ],
+    "babel": "inherit"
+  },
+  "devDependencies": {
+    "babel-eslint": "^7.2.3",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "babel-polyfill": "^6.23.0",
+    "babel-preset-env": "^1.4.0",
+    "babel-preset-es2017": "^6.24.1",
+    "babel-register": "^6.24.1",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.10.3"
   }
 }
