@@ -11,7 +11,6 @@ const createToken = (
     email,
     exp: getCurrentTimeInSeconds() + secondsUntilExpiration,
   }, secret, (err, token) => {
-    console.log('got token', token);
     err && reject(err);
     resolve(token);
   });

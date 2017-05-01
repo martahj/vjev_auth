@@ -2,9 +2,11 @@ import test from 'ava';
 import createToken from './createToken';
 
 test(async (t) => {
-  const token = await createToken('email', 6)
-                .then(tokenCreated => tokenCreated);
-                // .catch(err => throw(err))
-  console.log('made token', token);
-  t.fail();
+  await t.notThrows(createToken('testemail', 1));
+});
+
+test(async (t) => {
+  const token = await createToken('email', 6);
+  t.truthy(token);
+  t.is(typeof token, 'string');
 });
