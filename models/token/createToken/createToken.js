@@ -5,7 +5,7 @@ import getCurrentTimeInSeconds from '../../../utils/getCurrentTimeInSeconds';
 
 const createToken = (
   email: string,
-  secondsUntilExpiration: number,
+  secondsUntilExpiration: number = (60 * 60), // default to hour-long sessions
 ) => new Promise((resolve, reject) => {
   jwt.sign({
     email,
