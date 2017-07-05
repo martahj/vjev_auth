@@ -15,12 +15,12 @@
     "migrate-test": "NODE_ENV=test yarn run migrate",
     "undo-migrate": "yarn run knex migrate:rollback --env",
     "undo-migrate-test": "NODE_ENV=test yarn run undo-migrate",
-    "test": "ava"
+    "test": "NODE_ENV='test' ava"
   },
   "dependencies": {
-    "ava": "^0.19.1",
     "babel-cli": "^6.24.1",
     "babel-preset-node6": "^11.0.0",
+    "bcrypt": "^1.0.2",
     "bookshelf": "^0.10.3",
     "bookshelf-cascade-delete": "^2.0.1",
     "jsonwebtoken": "^7.4.0",
@@ -39,6 +39,7 @@
     "babel": "inherit"
   },
   "devDependencies": {
+    "ava": "^0.19.1",
     "babel-eslint": "^7.2.3",
     "babel-plugin-transform-flow-strip-types": "^6.22.0",
     "babel-polyfill": "^6.23.0",

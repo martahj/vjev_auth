@@ -5,7 +5,6 @@ const promisifiedTimeout = (
   waitMilliseconds: number,
 ):Promise<Function> => new Promise((resolve) => {
   setTimeout(() => {
-    console.log('calling cb');
     resolve(callback());
   }, waitMilliseconds);
 });

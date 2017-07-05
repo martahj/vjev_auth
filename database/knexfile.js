@@ -11,6 +11,7 @@ module.exports = {
       host: 'localhost',
       port: 5432,
       database: 'vjev_auth_dev',
+      user: 'postgres',
     },
     // seeds: {
     //   directory: './seeds'
@@ -22,6 +23,7 @@ module.exports = {
       host: 'localhost',
       port: 5432,
       database: 'vjev_auth_test',
+      user: 'postgres',
     },
     debug: false, // set true for verbose database operations
   },

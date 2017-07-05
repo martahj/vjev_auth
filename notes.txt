@@ -7,6 +7,10 @@ psql
 psql [database]
 \d <<<
 
+\dt << list the tables in a database
+
 \c <<< connects to a datbase
 
 \conninfo << see which database you're connected to
+
+CTL Z << quits psql

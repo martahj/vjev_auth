@@ -1,9 +1,11 @@
 import Knex from 'knex';
 import Bookshelf from 'bookshelf';
-import bookshelfCascadeDelete from 'bookshelf-cascade-delete';
-import knexConfig from '../knexfile';
+import bookshelfCascadeDelete from '../../../open-source/bookshelf-cascade-delete/src/index';
+import knexConfig from './knexfile';
 
-const knex = Knex(knexConfig);
+// console.log('bookshelfCascadeDelete', bookshelfCascadeDelete);
+
+const knex = Knex(knexConfig[process.env.NODE_ENV]);
 const bookshelf = Bookshelf(knex);
 bookshelf.plugin(bookshelfCascadeDelete);
 
