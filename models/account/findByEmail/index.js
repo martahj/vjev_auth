@@ -1,3 +1,3 @@
-import emailExists from './emailExists';
+import findByEmail from './findByEmail';
 
-export default emailExists;
+export default findByEmail;

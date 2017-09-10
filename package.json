@@ -21,12 +21,15 @@
     "babel-cli": "^6.24.1",
     "babel-preset-node6": "^11.0.0",
     "bcrypt": "^1.0.2",
+    "body-parser": "^1.17.2",
     "bookshelf": "^0.10.3",
-    "bookshelf-cascade-delete": "^2.0.1",
+    "bookshelf-cascade-delete": "martahj/bookshelf-cascade-delete",
+    "express": "^4.15.4",
     "jsonwebtoken": "^7.4.0",
     "knex": "^0.12.9",
+    "morgan": "^1.8.2",
     "pg": "^6.1.5",
-    "seneca": "^3.3.0"
+    "selectn": "^1.1.2"
   },
   "ava": {
     "files": [

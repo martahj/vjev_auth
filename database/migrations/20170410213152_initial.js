@@ -3,14 +3,14 @@ exports.up = function(knex, Promise) {
   return Promise.all([
     knex.schema.createTable('accounts', (table) => {
       table.increments('id').primary();
-      table.boolean('admin');
-  	  table.string('email').unique();
-  	  table.string('password');
+      table.boolean('admin').defaultTo(false).notNullable();
+  	  table.string('email').unique().notNullable();
+  	  table.string('password').notNullable();
       table.timestamps();
     }),
     knex.schema.createTable('tokens', (table) => {
       table.increments('id').primary();
-      table.string('token');
+      table.string('token').notNullable();
       table.timestamps();
     }),
   ]);

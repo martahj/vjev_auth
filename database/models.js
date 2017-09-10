@@ -11,9 +11,9 @@ const Account = bookshelf.Model.extend({
   dependents: [
     {
       name: 'tokens',
-      // keyOverrides: {
-      //   foreignKey: 'id',
-      // },
+      keyOverrides: {
+        foreignKey: 'id',
+      },
     },
   ],
 });
@@ -25,7 +25,12 @@ const Token = bookshelf.Model.extend({
   },
 });
 
+const Event = bookshelf.Model.extend({
+  tableName: 'events',
+});
+
 export default {
   Account,
   Token,
+  Event,
 };
