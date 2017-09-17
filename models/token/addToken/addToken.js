@@ -1,16 +1,16 @@
 // @flow
-import models from '../../../database/models';
+import { runCreate } from '../../../helpers/database';
 import type { TokenRecord } from '../types';
 
-const { Token } = models;
+export const NO_TOKEN_ERROR = 'addToken requires a token parameter';
+export const BAD_TOKEN_TYPE_ERROR = 'addToken requires a string token';
 
-const addToken = async (token: string): Promise<TokenRecord> => {
-  const record = await new Token({ token })
-    .save()
-    .catch((err) => {
-      console.log('error adding token', err);
-    });
-  return record;
+const addToken = async (
+  token: string
+): Promise<TokenRecord | Error> => {
+  if (!token) throw new Error(NO_TOKEN_ERROR);
+  if (typeof token !== 'string') throw new Error(BAD_TOKEN_TYPE_ERROR);
+  return runCreate('Token', { token });
 };
 
 export default addToken;

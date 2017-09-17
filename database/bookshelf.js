@@ -1,7 +1,7 @@
 import Knex from 'knex';
 import Bookshelf from 'bookshelf';
-import bookshelfCascadeDelete from 'bookshelf-cascade-delete';
-// import bookshelfCascadeDelete from '../../../open-source/bookshelf-cascade-delete/src/index';
+// import bookshelfCascadeDelete from 'bookshelf-cascade-delete';
+import bookshelfCascadeDelete from '../../../open-source/bookshelf-cascade-delete/src/index';
 import knexConfig from './knexfile';
 
 // console.log('bookshelfCascadeDelete', bookshelfCascadeDelete);

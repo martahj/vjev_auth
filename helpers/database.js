@@ -26,9 +26,7 @@ export const runFetch = async (model: ModelType, attr: Object): Promise<?Object>
 export const runDestroy = async (model: ModelType, attr: Object): Promise<?Object> => {
   try {
     const destroyed = await modelMap[model].where(attr).destroy();
-    console.log('destoryed', destroyed);
     const attributes = selectn('attributes', destroyed);
-    console.log('destroyed attributes', attributes);
     return attributes || null;
   } catch (err) {
     console.log(err);

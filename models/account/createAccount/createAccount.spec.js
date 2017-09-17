@@ -1,56 +1,81 @@
 import test from 'ava';
-import models from '../../../database/models';
-import createAccount from './createAccount';
-
-const { Account } = models;
+import promisifiedDelay from '../../../utils/promisifiedDelay';
+import createAccount, { DUPLICATE_EMAIL_ERROR } from './createAccount';
+import { INVALID_PASSWORD_ERROR } from '../saltPassword';
+import { INVALID_EMAIL } from '../findByEmail';
+import { runDestroy, runFetch } from '../../../helpers/database';
 
 const email = 'ok@this.org';
 const password = 'blurh';
-let saltedPassword;
-let admin;
 
 test.after.always(async () => {
-  Account
-    .where({ email })
-    .destroy()
-    .catch((err) => {
-      console.log('error deleting user', err);
-    });
+  await runDestroy('Account', { email });
 });
 
-test('Returns a user if successfully created', async (t) => {
+test('Returns and creates a user without admin priveledges and with a salted pw', async (t) => {
   const createdUser = await createAccount(email, password);
   t.truthy(createdUser);
+  const createdRecord = await runFetch('Account', { email });
+  t.truthy(createdRecord);
   t.is(createdUser.email, email);
-  admin = createdUser.admin;
-  saltedPassword = createdUser.password;
+  t.is(createdRecord.email, email);
+  t.is(createdUser.admin, false);
+  t.is(createdRecord.admin, false);
+  t.not(createdUser.password, password);
+  t.is(createdUser.password, createdRecord.password);
 });
 
-test('Creates a user without admin privledges', (t) => {
-  t.is(admin, false);
+test('throws an error if no email or password is provided', async (t) => {
+  try {
+    await createAccount();
+    t.fail();
+  } catch (err) {
+    t.is(err.message, INVALID_EMAIL);
+  }
 });
 
-test('salts the password before adding the user to the database', (t) => {
-  t.truthy(saltedPassword);
-  t.not(saltedPassword, password);
+test('throws an error if the email is missing', async (t) => {
+  try {
+    await createAccount(undefined, 'paofwjwo3jiao');
+    t.fail();
+  } catch (err) {
+    t.is(err.message, INVALID_EMAIL);
+  }
 });
 
-test('returns null if no arguments are provided', async (t) => {
-  const createdUser = await createAccount();
-  t.is(createdUser, null);
+test('throws an error if the email is not a string', async (t) => {
+  try {
+    await createAccount(487398489, 'paofwjwo3jiao');
+    t.fail();
+  } catch (err) {
+    t.is(err.message, INVALID_EMAIL);
+  }
 });
 
-test('returns null if no email is provided', async (t) => {
-  const createdUser = await createAccount(null, 'muhpassword');
-  t.is(createdUser, null);
+test('throws an error if the password is missing', async (t) => {
+  try {
+    await createAccount('wuutttimanemai');
+    t.fail();
+  } catch (err) {
+    t.is(err.message, INVALID_PASSWORD_ERROR);
+  }
 });
 
-test('returns null if no password is provided', async(t) => {
-  const createdUser = await createAccount('email@helloworld');
-  t.is(createdUser, null);
+test('throws an error if password is not a string', async (t) => {
+  try {
+    await createAccount('wuutttimanemai', true);
+    t.fail();
+  } catch (err) {
+    t.is(err.message, INVALID_PASSWORD_ERROR);
+  }
 });
 
-test('returns null if attempting to create an account with a duplicate email', async (t) => {
-  const createdUser = await createAccount(email, 'muhpassword');
-  t.is(createdUser, null);
+test('throws an error if attempting to create an account with a duplicate email', async (t) => {
+  await promisifiedDelay(5000); // run this test after the first one
+  try {
+    await createAccount(email, '3ur09jf230j90w4');
+    t.fail();
+  } catch (err) {
+    t.is(err.message, DUPLICATE_EMAIL_ERROR);
+  }
 });
