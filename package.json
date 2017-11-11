@@ -5,7 +5,8 @@
   "repository": {},
   "license": "MIT",
   "scripts": {
-    "start": "babel-node index",
+    "dev": "NODE_ENV=development nodemon index.js --exec babel-node",
+    "start": "NODE_ENV=development babel-node index",
     "lint": "eslint database config utils models",
     "knex": "knex --knexfile database/knexfile.js",
     "make-migration": "yarn run knex migrate:make",
@@ -53,6 +54,7 @@
     "eslint-config-airbnb": "^14.1.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
-    "eslint-plugin-react": "^6.10.3"
+    "eslint-plugin-react": "^6.10.3",
+    "nodemon": "^1.12.1"
   }
 }

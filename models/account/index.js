@@ -1,13 +1,11 @@
-// import checkPasswordsMatch from './checkPasswordsMatch';
+import createAccount from './createAccount';
 import checkValidLogin from './checkValidLogin';
 import findByEmail from './findByEmail';
-import checkIfEmailExists from './checkIfEmailExists';
-import createAccount from './createAccount';
-// import saltPas
 
 export default {
+  createAccount,
   checkValidLogin,
   findByEmail,
-  checkIfEmailExists,
-  createAccount,
 };
+
+export { DUPLICATE_EMAIL_ERROR } from './createAccount';

@@ -20,25 +20,25 @@
 //   }
 // }
 
-const send200 = (res, json) => res.status(200).json({
-  success: true,
-  ...json,
-});
-
-const send201 = (res, json) => res.status(201).json({
-  success: true,
-  ...json,
-});
-
-const send400 = (res, message: ?string) => res.status(400).send({
-  success: false,
-  message: message || 'Bad request',
-});
-
-const send403 = (res, message: ?string) => res.status(404).send({
-  success: false,
-  message: message || 'Not authorized',
-});
+// const send200 = (res, json) => res.status(200).json({
+//   success: true,
+//   ...json,
+// });
+//
+// const send201 = (res, json) => res.status(201).json({
+//   success: true,
+//   ...json,
+// });
+//
+// const send400 = (res, message: ?string) => res.status(400).send({
+//   success: false,
+//   message: message || 'Bad request',
+// });
+//
+// const send403 = (res, message: ?string) => res.status(404).send({
+//   success: false,
+//   message: message || 'Not authorized',
+// });
 
 const defaultMessages = {
   400: 'Bad request',

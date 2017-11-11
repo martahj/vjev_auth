@@ -1,7 +1,3 @@
-import account from './account';
-import token from './token';
-
-export default {
-  account,
-  token,
-};
+export { default as account } from './account';
+export { default as token } from './token';
+export * from './account';

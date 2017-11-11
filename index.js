@@ -1,6 +1,6 @@
 // @flow
 import express from 'express';
-import selectn from 'selectn';
+// import selectn from 'selectn';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 
@@ -14,153 +14,30 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+// app.configure(() => {
+//   app.use((req, res, next) => {
+//     // TODO maybe get some standards
+//     res.header('Access-Control-Allow-Origin', '*');
+//     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+//     next();
+//   });
+// });
+
 // use morgan to log requests to the console
 env && 'development' && app.use(morgan('dev')); // TODO or prod
 
+
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Headers', 'accept, authorization, content-type, x-requested-with, credentials');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
+  res.setHeader('Access-Control-Allow-Origin', req.header('origin'));
+  next();
+});
+
 const routes = express.Router();
-
-const events = [
-  {
-    title: 'All Day Event',
-    allDay: true,
-    start: new Date(2017, 8, 0),
-    end: new Date(2017, 8, 1),
-    desc: 'an all day event!',
-    link: 'http://www.google.com',
-    location: 'starbucks',
-    special: false,
-    featured: false,
-    imageUrl: null,
-  },
-  {
-    title: 'Long Event',
-    start: new Date(2017, 8, 7),
-    end: new Date(2017, 8, 10),
-    desc: 'an all day event!',
-    link: 'http://www.google.com',
-    location: 'starbucks',
-    special: false,
-    featured: false,
-    imageUrl: null,
-  },
-
-  {
-    title: 'DTS STARTS',
-    start: new Date(2016, 7, 13, 0, 0, 0),
-    end: new Date(2016, 7, 20, 0, 0, 0),
-    desc: 'an all day event!',
-    link: 'http://www.google.com',
-    location: 'starbucks',
-    special: true,
-    featured: true,
-    imageUrl: 'http://res.cloudinary.com/dfts7qlgf/image/upload/v1501639882/vjeverica/dev/IMG_0349.jpg',
-  },
-
-  {
-    title: 'DTS ENDS',
-    start: new Date(2016, 9, 6, 0, 0, 0),
-    end: new Date(2016, 9, 13, 0, 0, 0),
-    desc: 'an all day event!',
-    link: 'http://www.google.com',
-    location: 'starbucks',
-    special: false,
-    featured: false,
-    imageUrl: null,
-  },
-
-  {
-    title: 'Some Event',
-    start: new Date(2017, 8, 9, 0, 0, 0),
-    end: new Date(2017, 8, 9, 0, 0, 0),
-    desc: 'an all day event!',
-    link: 'http://www.google.com',
-    location: 'starbucks',
-    special: false,
-    featured: false,
-    imageUrl: null,
-  },
-  {
-    title: 'Conference',
-    start: new Date(2017, 8, 11),
-    end: new Date(2017, 8, 13),
-    desc: 'Big conference for important people',
-    desc: 'an all day event!',
-    link: 'http://www.google.com',
-    location: 'starbucks',
-    special: false,
-    featured: false,
-    imageUrl: null,
-  },
-  {
-    title: 'Meeting',
-    start: new Date(2017, 8, 12, 10, 30, 0, 0),
-    end: new Date(2017, 8, 12, 12, 30, 0, 0),
-    desc: 'Pre-meeting meeting, to prepare for the meeting',
-    desc: 'an all day event!',
-    link: 'http://www.google.com',
-    location: 'starbucks',
-    special: false,
-    featured: false,
-    imageUrl: null,
-  },
-  {
-    title: 'Lunch',
-    start: new Date(2017, 8, 12, 12, 0, 0, 0),
-    end: new Date(2017, 8, 12, 13, 0, 0, 0),
-    desc: 'Power lunch',
-    link: 'http://www.google.com',
-    location: 'starbucks',
-    special: false,
-    featured: false,
-    imageUrl: null,
-  },
-  {
-    title: 'Meeting',
-    start: new Date(2017, 8, 12, 14, 0, 0, 0),
-    end: new Date(2017, 8, 12, 15, 0, 0, 0),
-    desc: 'an all day event!',
-    link: 'http://www.google.com',
-    location: 'starbucks',
-    special: false,
-    featured: false,
-    imageUrl: null,
-  },
-  {
-    title: 'Happy Hour',
-    start: new Date(2017, 8, 12, 17, 0, 0, 0),
-    end: new Date(2017, 8, 12, 17, 30, 0, 0),
-    desc: 'Most important meal of the day',
-    link: 'http://www.google.com',
-    location: 'starbucks',
-    special: true,
-    featured: false,
-    imageUrl: 'http://res.cloudinary.com/dfts7qlgf/image/upload/v1501639882/vjeverica/dev/IMG_0349.jpg',
-  },
-  {
-    title: 'Dinner',
-    start: new Date(2017, 8, 12, 20, 0, 0, 0),
-    end: new Date(2017, 8, 12, 21, 0, 0, 0),
-    desc: 'an all day event!',
-    link: 'http://www.google.com',
-    location: 'starbucks',
-    special: false,
-    featured: true,
-    imageUrl: null,
-  },
-  {
-    title: 'Birthday Party',
-    start: new Date(2017, 8, 13, 7, 0, 0),
-    end: new Date(2017, 8, 13, 10, 30, 0),
-    desc: 'an all day event!',
-    link: 'http://www.google.com',
-    location: 'starbucks',
-    otherThing: 'hopefully will not break',
-    special: true,
-    featured: true,
-    imageUrl: 'http://res.cloudinary.com/dfts7qlgf/image/upload/v1501639882/vjeverica/dev/IMG_0349.jpg',
-    // recurringId - id of the recurring event
-  },
-];
+app.use('/', routes);
+routes.use('/auth', require('./routes/auth').default);
+routes.use('/events', require('./routes/events').default);
 
 /*
  Recurring event
@@ -179,77 +56,19 @@ const events = [
  If firstinstance changes, it will update all of the
 */
 
- /*
-  * Creates a new account
-  * Input: email, password
-  * Output: token
-  */
-routes.post('/auth/signup/', async (req, res) => {
-  try {
-    const email = selectn('email', req.body);
-    const password = selectn('password', req.body);
-    if (!email) sendResponse(res, 400, 'Email required for signup');
-    if (!password) sendResponse(res, 400, 'Password required for signup');
-    const accountAlreadyExists = await models.account.checkIfEmailExists(email);
-    if (accountAlreadyExists) sendResponse(res, 400, 'An account already exists with that email address');
-    await models.account.createAccount(email, password);
-    // TODO add token to database
-    const token = await models.token.addToken(email);
-    if (!token) sendResponse(res, 500);
-    sendResponse(res, 201, { token });
-  } catch (err) {
-    sendResponse(res, 500);
-  }
-});
-
-/*
- * Authenticate user by email and password
- * Input: email, password
- * Output: token
- */
-routes.post('/auth/login', async (req, res) => {
-  try {
-    const email = selectn('email', req.body);
-    const password = selectn('password', req.body);
-    if (!email) sendResponse(res, 400, 'Email required for login');
-    if (!password) sendResponse(res, 400, 'Password required for login');
-    const loginValid = await models.account.checkValidLogin(email, password);
-    if (!loginValid) sendResponse(res, 400, 'Incorrect email or password');
-    const token = await models.token.addToken(email);
-    sendResponse(res, 201, { token });
-  } catch (err) {
-    sendResponse(res, 500);
-  }
-});
-
-routes.get('/all-events', (req, res) => {
-  console.log('in /all-events route');
-  res.json(events);
-});
-
-routes.get('/featured-events', (req, res) => {
-  res.json(events.slice(2));
-});
-
-routes.get('/upcoming-special', (req, res) => {
-  /*
-   * get events that are special and have not happened yet
-  */
-});
-
 routes.use(async (req, res, next) => {
   try {
     const token = req.body.token || req.query.token || req.headers['x-access-token'];
-    if (!token) sendResponse(res, 403);
-    // TODO validate that token is in the database
-    const userEmail = models.token.validateToken(token);
-    if (!userEmail) {
+    if (!token) next();
+    const tokenInDatabase = await models.findToken(token);
+    if (!tokenInDatabase) next();
+    const email = models.validateToken(token);
+    if (!email) {
       await models.token.deleteToken(token);
-      sendResponse(res, 403);
+      next();
     }
-    const user = await models.account.findByEmail(userEmail);
-    if (!user) sendResponse(res, 403);
-    req.token = token;
+    const user = await models.findByEmail(email);
+    if (!user) next();
     req.authenticated = true;
     req.admin = user.admin;
     next();
@@ -258,20 +77,9 @@ routes.use(async (req, res, next) => {
   }
 });
 
-routes.post('auth/logout', async (req, res) => {
-  try {
-    const { token } = req;
-    const tokenDeleted = await models.token.deleteToken(token);
-    if (!tokenDeleted) sendResponse(res, 500);
-    sendResponse(res, 201);
-  } catch (err) {
-    sendResponse(res, 500);
-  }
-});
-
-app.use('/', routes);
 
 const port = process.env.PORT || 3000;
+
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
